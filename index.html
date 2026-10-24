@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#245c46">
+  <meta name="description" content="Reis-Rechner für fünf Gruppen in zwei Crèches">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/rice-192.png">
+  <title>Reis Rechner 2.0</title>
+  <style>
+    :root { color-scheme: light; --green:#245c46; --pale:#edf5ef; --line:#d7e1da; --ink:#17231d; --muted:#526158; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:#f5f7f5; color:var(--ink); font:16px/1.4 system-ui,-apple-system,Segoe UI,Roboto,sans-serif; }
+    header { background:var(--green); color:white; padding:10px 12px; }
+    header h1 { margin:0; font-size:1.22rem; }
+    header p { display:none; }
+    main { max-width:720px; margin:auto; padding:6px 8px 12px; }
+    .intro { margin:2px 3px 14px; color:var(--muted); font-size:.92rem; }
+    .group { background:white; border:1px solid var(--line); border-radius:10px; padding:7px 9px; margin:0 0 6px; box-shadow:0 1px 3px #17231d08; }
+    .group h2 { margin:0 0 5px; font-size:.96rem; }
+    .rate { color:var(--muted); font-size:.82rem; margin-bottom:12px; }
+    .fields { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    .portions { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:5px; padding-top:5px; border-top:1px dashed #d7e1da; }
+    .portions label { font-size:.72rem; }
+    .portions input { padding:5px 7px; margin-top:2px; font-size:.9rem; }
+    .section-label { grid-column:1/-1; font-size:.70rem; color:var(--muted); font-weight:650; margin-bottom:-4px; }
+
+    label { display:block; font-size:.76rem; color:var(--muted); }
+    input { width:100%; margin-top:3px; padding:6px 8px; border:1px solid #b9c9be; border-radius:7px; font:inherit; font-size:.92rem; background:white; color:var(--ink); }
+    input:focus { outline:3px solid #b8d8c5; border-color:var(--green); }
+    .result { display:flex; justify-content:space-between; gap:8px; align-items:center; margin-top:5px; padding-top:5px; border-top:1px solid #e7ede8; }
+    .result span { color:var(--muted); font-size:.75rem; }
+    .result strong { font-size:.95rem; white-space:nowrap; }
+    .total { background:var(--pale); border:1px solid #c8dfcf; border-radius:11px; padding:9px; margin-top:7px; }
+    .total h2 { margin:0 0 7px; font-size:.98rem; }
+    .totals { display:grid; grid-template-columns:1fr 1fr; gap:7px; }
+    .metric { background:white; border-radius:8px; padding:8px; }
+    .metric .label { font-size:.72rem; color:var(--muted); }
+    .metric .value { font-size:1.15rem; font-weight:750; margin-top:2px; }
+    .note { margin:6px 2px 0; font-size:.68rem; color:var(--muted); }
+    .actions { display:grid; grid-template-columns:1fr 1fr; gap:7px; margin-top:7px; }
+    button { border:0; border-radius:8px; padding:8px 7px; font:inherit; font-size:.82rem; font-weight:650; cursor:pointer; }
+    .primary { background:var(--green); color:white; }
+    .secondary { background:#e5ebe6; color:var(--ink); }
+    #status { min-height:1em; color:var(--green); font-size:.75rem; margin-top:3px; }
+    footer { text-align:center; color:var(--muted); font-size:.68rem; padding:4px 0 0; }
+    @media (min-width:600px) { main { padding:20px 18px 36px; } .group { padding:17px; } }
+  </style>
+</head>
+<body>
+<header>
+  <h1>🍚 Reis Rechner 2.0</h1>
+</header>
+<main>
+
+
+  <section class="group" data-key="rb" data-child="30" data-adult="120">
+    <h2>Reichlange – Baby</h2><div class="fields">
+      <label>Kinder<input type="number" min="0" step="1" inputmode="numeric" value="0" data-field="children" aria-label="Reichlange Baby Kinder"></label>
+      <label>Erwachsene<input type="number" min="0" step="1" inputmode="numeric" value="0" data-field="adults" aria-label="Reichlange Baby Erwachsene"></label>
+    </div>
+    <div class="portions" aria-label="Portionsmengen für Reichlange – Baby">
+      <div class="section-label">Portionsmenge gekochter Reis (änderbar)</div>
+      <label>Gramm pro Kind<input type="number" min="0" step="1" inputmode="numeric" value="30" data-portion="child" aria-label="Reichlange – Baby Gramm pro Kind"></label>
+      <label>Gramm pro Erwachsenem<input type="number" min="0" step="1" inputmode="numeric" value="120" data-portion="adult" aria-label="Reichlange – Baby Gramm pro Erwachsenem"></label>
+    </div>
+    <div class="result"><span>Gekochter Reis für diese Gruppe</span><strong data-result>0 g</strong></div>
+  </section>
+
+  <section class="group" data-key="rm" data-child="50" data-adult="120">
+    <h2>Reichlange – Mitte</h2><div class="fields">
+      <label>Kinder<input type="number" min="0" step="1" inputmode="numeric" value="0" data-field="children" aria-label="Reichlange Mitte Kinder"></label>
+      <label>Erwachsene<input type="number" min="0" step="1" inputmode="numeric" value="0" data-field="adults" aria-label="Reichlange Mitte Erwachsene"></label>
+    </div>
+    <div class="portions" aria-label="Portionsmengen für Reichlange – Mitte">
+      <div class="section-label">Portionsmenge gekochter Reis (änderbar)</div>
+      <label>Gramm pro Kind<input type="number" min="0" step="1" inputmode="numeric" value="50" data-portion="child" aria-label="Reichlange – Mitte Gramm pro Kind"></label>
+      <label>Gramm pro Erwachsenem<input type="number" min="0" step="1" inputmode="numeric" value="120" data-portion="adult" aria-label="Reichlange – Mitte Gramm pro Erwachsenem"></label>
+    </div>
+    <div class="result"><span>Gekochter Reis für diese Gruppe</span><strong data-result>0 g</strong></div>
+  </section>
+
+  <section class="group" data-key="rg" data-child="55" data-adult="155">
+    <h2>Reichlange – Garten</h2><div class="fields">
+      <label>Kinder<input type="number" min="0" step="1" inputmode="numeric" value="0" data-field="children" aria-label="Reichlange Garten Kinder"></label>
+      <label>Erwachsene<input type="number" min="0" step="1" inputmode="numeric" value="0" data-field="adults" aria-label="Reichlange Garten Erwachsene"></label>
+    </div>
+    <div class="portions" aria-label="Portionsmengen für Reichlange – Garten">
+      <div class="section-label">Portionsmenge gekochter Reis (änderbar)</div>
+      <label>Gramm pro Kind<input type="number" min="0" step="1" inputmode="numeric" value="55" data-portion="child" aria-label="Reichlange – Garten Gramm pro Kind"></label>
+      <label>Gramm pro Erwachsenem<input type="number" min="0" step="1" inputmode="numeric" value="155" data-portion="adult" aria-label="Reichlange – Garten Gramm pro Erwachsenem"></label>
+    </div>
+    <div class="result"><span>Gekochter Reis für diese Gruppe</span><strong data-result>0 g</strong></div>
+  </section>
+
+  <section class="group" data-key="lb" data-child="30" data-adult="120">
+    <h2>Ell – Baby</h2><div class="fields">
+      <label>Kinder<input type="number" min="0" step="1" inputmode="numeric" value="0" data-field="children" aria-label="L Baby Kinder"></label>
+      <label>Erwachsene<input type="number" min="0" step="1" inputmode="numeric" value="0" data-field="adults" aria-label="L Baby Erwachsene"></label>
+    </div>
+    <div class="portions" aria-label="Portionsmengen für Ell – Baby">
+      <div class="section-label">Portionsmenge gekochter Reis (änderbar)</div>
+      <label>Gramm pro Kind<input type="number" min="0" step="1" inputmode="numeric" value="30" data-portion="child" aria-label="Ell – Baby Gramm pro Kind"></label>
+      <label>Gramm pro Erwachsenem<input type="number" min="0" step="1" inputmode="numeric" value="120" data-portion="adult" aria-label="Ell – Baby Gramm pro Erwachsenem"></label>
+    </div>
+    <div class="result"><span>Gekochter Reis für diese Gruppe</span><strong data-result>0 g</strong></div>
+  </section>
+
+  <section class="group" data-key="lg" data-child="45" data-adult="120">
+    <h2>Ell – Garten</h2><div class="fields">
+      <label>Kinder<input type="number" min="0" step="1" inputmode="numeric" value="0" data-field="children" aria-label="L Garten Kinder"></label>
+      <label>Erwachsene<input type="number" min="0" step="1" inputmode="numeric" value="0" data-field="adults" aria-label="L Garten Erwachsene"></label>
+    </div>
+    <div class="portions" aria-label="Portionsmengen für Ell – Garten">
+      <div class="section-label">Portionsmenge gekochter Reis (änderbar)</div>
+      <label>Gramm pro Kind<input type="number" min="0" step="1" inputmode="numeric" value="45" data-portion="child" aria-label="Ell – Garten Gramm pro Kind"></label>
+      <label>Gramm pro Erwachsenem<input type="number" min="0" step="1" inputmode="numeric" value="120" data-portion="adult" aria-label="Ell – Garten Gramm pro Erwachsenem"></label>
+    </div>
+    <div class="result"><span>Gekochter Reis für diese Gruppe</span><strong data-result>0 g</strong></div>
+  </section>
+
+  <section class="total" aria-live="polite">
+    <h2>Gesamtmenge für den gemeinsamen Topf</h2>
+    <div class="totals">
+      <div class="metric"><div class="label">Gekochter Reis insgesamt</div><div class="value" id="cooked">0 g</div></div>
+      <div class="metric"><div class="label">Rohen Reis abwiegen</div><div class="value" id="raw">0 g</div></div>
+    </div>
+    <p class="note">Umrechnung: 40 g roher Reis ergeben 100 g gekochten Reis. Der rohe Reis wird auf das nächste ganze Gramm aufgerundet. Die Gruppenwerte sind die gekochten Portionen, die du anschließend verteilst.</p>
+  </section>
+
+  <div class="actions">
+    <button class="primary" id="copy">Mengen kopieren</button>
+    <button class="secondary" id="reset">Personenzahlen zurücksetzen</button>
+  </div>
+  <div id="status" role="status"></div>
+  <footer>Die Eingaben werden nur auf diesem Gerät verarbeitet und nicht an einen Server gesendet.</footer>
+</main>
+<script>
+(() => {
+  const groups = [...document.querySelectorAll('.group')];
+  const fmt = n => `${Math.round(n).toLocaleString('de-DE')} g`;
+  function calculate() {
+    let total = 0;
+    groups.forEach(g => {
+      const childCount = Math.max(0, Math.floor(Number(g.querySelector('[data-field="children"]').value) || 0));
+      const adultCount = Math.max(0, Math.floor(Number(g.querySelector('[data-field="adults"]').value) || 0));
+      const childPortion = Math.max(0, Math.floor(Number(g.querySelector('[data-portion="child"]').value) || 0));
+      const adultPortion = Math.max(0, Math.floor(Number(g.querySelector('[data-portion="adult"]').value) || 0));
+      const cooked = childCount * childPortion + adultCount * adultPortion;
+      const rate = g.querySelector('.rate');
+      rate.textContent = `${childPortion} g gekochter Reis je Kind · ${adultPortion} g je Erwachsenem`;
+      total += cooked;
+      g.querySelector('[data-result]').textContent = fmt(cooked);
+    });
+    document.getElementById('cooked').textContent = fmt(total);
+    document.getElementById('raw').textContent = fmt(Math.ceil(total * 0.4));
+    return total;
+  }
+  document.querySelectorAll('input').forEach(i => i.addEventListener('input', calculate));
+  document.getElementById('reset').addEventListener('click', () => {
+    document.querySelectorAll('[data-field]').forEach(i => i.value = 0);
+    document.getElementById('status').textContent = '';
+    calculate();
+  });
+  document.getElementById('copy').addEventListener('click', async () => {
+    calculate();
+    const lines = ['Reis-Rechner – heutige Mengen'];
+    groups.forEach(g => lines.push(`${g.querySelector('h2').textContent}: ${g.querySelector('[data-result]').textContent} (${g.querySelector('[data-portion="child"]').value} g/Kind, ${g.querySelector('[data-portion="adult"]').value} g/Erwachsener)`));
+    lines.push(`Gekochter Reis insgesamt: ${document.getElementById('cooked').textContent}`);
+    lines.push(`Rohen Reis abwiegen: ${document.getElementById('raw').textContent}`);
+    const status = document.getElementById('status');
+    try {
+      await navigator.clipboard.writeText(lines.join('\n'));
+      status.textContent = 'Mengen wurden kopiert.';
+    } catch {
+      const ta = document.createElement('textarea');
+      ta.value = lines.join('\n'); document.body.appendChild(ta); ta.select();
+      const ok = document.execCommand('copy'); ta.remove();
+      status.textContent = ok ? 'Mengen wurden kopiert.' : 'Kopieren nicht möglich – bitte Werte manuell übernehmen.';
+    }
+  });
+  calculate();
+  if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+    window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(() => {}));
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-const CACHE = 'reis-rechner-2-0-v1';
+const CACHE = 'reis-rechner-2-0-v2';
 const FILES = ['./', './index.html', './manifest.webmanifest', './rice-192.png', './rice-512.png'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(FILES)));

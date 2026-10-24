@@ -148,8 +148,6 @@
       const childPortion = Math.max(0, Math.floor(Number(g.querySelector('[data-portion="child"]').value) || 0));
       const adultPortion = Math.max(0, Math.floor(Number(g.querySelector('[data-portion="adult"]').value) || 0));
       const cooked = childCount * childPortion + adultCount * adultPortion;
-      const rate = g.querySelector('.rate');
-      rate.textContent = `${childPortion} g gekochter Reis je Kind · ${adultPortion} g je Erwachsenem`;
       total += cooked;
       g.querySelector('[data-result]').textContent = fmt(cooked);
     });

@@ -1,188 +1,41 @@
 <!doctype html>
-<html lang="de">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#245c46">
-  <meta name="description" content="Reis-Rechner für fünf Gruppen in zwei Crèches">
-  <link rel="manifest" href="manifest.webmanifest">
-  <link rel="icon" href="icons/rice-192.png">
-  <title>Reis Rechner 2.0</title>
-  <style>
-    :root { color-scheme: light; --green:#245c46; --pale:#edf5ef; --line:#d7e1da; --ink:#17231d; --muted:#526158; }
-    * { box-sizing:border-box; }
-    body { margin:0; background:#f5f7f5; color:var(--ink); font:16px/1.4 system-ui,-apple-system,Segoe UI,Roboto,sans-serif; }
-    header { background:var(--green); color:white; padding:10px 12px; }
-    header h1 { margin:0; font-size:1.22rem; }
-    header p { display:none; }
-    main { max-width:720px; margin:auto; padding:6px 8px 12px; }
-    .intro { margin:2px 3px 14px; color:var(--muted); font-size:.92rem; }
-    .group { background:white; border:1px solid var(--line); border-radius:10px; padding:7px 9px; margin:0 0 6px; box-shadow:0 1px 3px #17231d08; }
-    .group h2 { margin:0 0 5px; font-size:.96rem; }
-    .rate { color:var(--muted); font-size:.82rem; margin-bottom:12px; }
-    .fields { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-    .portions { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:5px; padding-top:5px; border-top:1px dashed #d7e1da; }
-    .portions label { font-size:.72rem; }
-    .portions input { padding:5px 7px; margin-top:2px; font-size:.9rem; }
-    .section-label { grid-column:1/-1; font-size:.70rem; color:var(--muted); font-weight:650; margin-bottom:-4px; }
-
-    label { display:block; font-size:.76rem; color:var(--muted); }
-    input { width:100%; margin-top:3px; padding:6px 8px; border:1px solid #b9c9be; border-radius:7px; font:inherit; font-size:.92rem; background:white; color:var(--ink); }
-    input:focus { outline:3px solid #b8d8c5; border-color:var(--green); }
-    .result { display:flex; justify-content:space-between; gap:8px; align-items:center; margin-top:5px; padding-top:5px; border-top:1px solid #e7ede8; }
-    .result span { color:var(--muted); font-size:.75rem; }
-    .result strong { font-size:.95rem; white-space:nowrap; }
-    .total { background:var(--pale); border:1px solid #c8dfcf; border-radius:11px; padding:9px; margin-top:7px; }
-    .total h2 { margin:0 0 7px; font-size:.98rem; }
-    .totals { display:grid; grid-template-columns:1fr 1fr; gap:7px; }
-    .metric { background:white; border-radius:8px; padding:8px; }
-    .metric .label { font-size:.72rem; color:var(--muted); }
-    .metric .value { font-size:1.15rem; font-weight:750; margin-top:2px; }
-    .note { margin:6px 2px 0; font-size:.68rem; color:var(--muted); }
-    .actions { display:grid; grid-template-columns:1fr 1fr; gap:7px; margin-top:7px; }
-    button { border:0; border-radius:8px; padding:8px 7px; font:inherit; font-size:.82rem; font-weight:650; cursor:pointer; }
-    .primary { background:var(--green); color:white; }
-    .secondary { background:#e5ebe6; color:var(--ink); }
-    #status { min-height:1em; color:var(--green); font-size:.75rem; margin-top:3px; }
-    footer { text-align:center; color:var(--muted); font-size:.68rem; padding:4px 0 0; }
-    @media (min-width:600px) { main { padding:20px 18px 36px; } .group { padding:17px; } }
-  </style>
-</head>
-<body>
-<header>
-  <h1>🍚 Reis Rechner 2.0</h1>
-</header>
-<main>
-
-
-  <section class="group" data-key="rb" data-child="30" data-adult="120">
-    <h2>Reichlange – Baby</h2><div class="fields">
-      <label>Kinder<input type="number" min="0" step="1" inputmode="numeric" value="0" data-field="children" aria-label="Reichlange Baby Kinder"></label>
-      <label>Erwachsene<input type="number" min="0" step="1" inputmode="numeric" value="0" data-field="adults" aria-label="Reichlange Baby Erwachsene"></label>
-    </div>
-    <div class="portions" aria-label="Portionsmengen für Reichlange – Baby">
-      <div class="section-label">Portionsmenge gekochter Reis (änderbar)</div>
-      <label>Gramm pro Kind<input type="number" min="0" step="1" inputmode="numeric" value="30" data-portion="child" aria-label="Reichlange – Baby Gramm pro Kind"></label>
-      <label>Gramm pro Erwachsenem<input type="number" min="0" step="1" inputmode="numeric" value="120" data-portion="adult" aria-label="Reichlange – Baby Gramm pro Erwachsenem"></label>
-    </div>
-    <div class="result"><span>Gekochter Reis für diese Gruppe</span><strong data-result>0 g</strong></div>
-  </section>
-
-  <section class="group" data-key="rm" data-child="50" data-adult="120">
-    <h2>Reichlange – Mitte</h2><div class="fields">
-      <label>Kinder<input type="number" min="0" step="1" inputmode="numeric" value="0" data-field="children" aria-label="Reichlange Mitte Kinder"></label>
-      <label>Erwachsene<input type="number" min="0" step="1" inputmode="numeric" value="0" data-field="adults" aria-label="Reichlange Mitte Erwachsene"></label>
-    </div>
-    <div class="portions" aria-label="Portionsmengen für Reichlange – Mitte">
-      <div class="section-label">Portionsmenge gekochter Reis (änderbar)</div>
-      <label>Gramm pro Kind<input type="number" min="0" step="1" inputmode="numeric" value="50" data-portion="child" aria-label="Reichlange – Mitte Gramm pro Kind"></label>
-      <label>Gramm pro Erwachsenem<input type="number" min="0" step="1" inputmode="numeric" value="120" data-portion="adult" aria-label="Reichlange – Mitte Gramm pro Erwachsenem"></label>
-    </div>
-    <div class="result"><span>Gekochter Reis für diese Gruppe</span><strong data-result>0 g</strong></div>
-  </section>
-
-  <section class="group" data-key="rg" data-child="55" data-adult="155">
-    <h2>Reichlange – Garten</h2><div class="fields">
-      <label>Kinder<input type="number" min="0" step="1" inputmode="numeric" value="0" data-field="children" aria-label="Reichlange Garten Kinder"></label>
-      <label>Erwachsene<input type="number" min="0" step="1" inputmode="numeric" value="0" data-field="adults" aria-label="Reichlange Garten Erwachsene"></label>
-    </div>
-    <div class="portions" aria-label="Portionsmengen für Reichlange – Garten">
-      <div class="section-label">Portionsmenge gekochter Reis (änderbar)</div>
-      <label>Gramm pro Kind<input type="number" min="0" step="1" inputmode="numeric" value="55" data-portion="child" aria-label="Reichlange – Garten Gramm pro Kind"></label>
-      <label>Gramm pro Erwachsenem<input type="number" min="0" step="1" inputmode="numeric" value="155" data-portion="adult" aria-label="Reichlange – Garten Gramm pro Erwachsenem"></label>
-    </div>
-    <div class="result"><span>Gekochter Reis für diese Gruppe</span><strong data-result>0 g</strong></div>
-  </section>
-
-  <section class="group" data-key="lb" data-child="30" data-adult="120">
-    <h2>Ell – Baby</h2><div class="fields">
-      <label>Kinder<input type="number" min="0" step="1" inputmode="numeric" value="0" data-field="children" aria-label="L Baby Kinder"></label>
-      <label>Erwachsene<input type="number" min="0" step="1" inputmode="numeric" value="0" data-field="adults" aria-label="L Baby Erwachsene"></label>
-    </div>
-    <div class="portions" aria-label="Portionsmengen für Ell – Baby">
-      <div class="section-label">Portionsmenge gekochter Reis (änderbar)</div>
-      <label>Gramm pro Kind<input type="number" min="0" step="1" inputmode="numeric" value="30" data-portion="child" aria-label="Ell – Baby Gramm pro Kind"></label>
-      <label>Gramm pro Erwachsenem<input type="number" min="0" step="1" inputmode="numeric" value="120" data-portion="adult" aria-label="Ell – Baby Gramm pro Erwachsenem"></label>
-    </div>
-    <div class="result"><span>Gekochter Reis für diese Gruppe</span><strong data-result>0 g</strong></div>
-  </section>
-
-  <section class="group" data-key="lg" data-child="45" data-adult="120">
-    <h2>Ell – Garten</h2><div class="fields">
-      <label>Kinder<input type="number" min="0" step="1" inputmode="numeric" value="0" data-field="children" aria-label="L Garten Kinder"></label>
-      <label>Erwachsene<input type="number" min="0" step="1" inputmode="numeric" value="0" data-field="adults" aria-label="L Garten Erwachsene"></label>
-    </div>
-    <div class="portions" aria-label="Portionsmengen für Ell – Garten">
-      <div class="section-label">Portionsmenge gekochter Reis (änderbar)</div>
-      <label>Gramm pro Kind<input type="number" min="0" step="1" inputmode="numeric" value="45" data-portion="child" aria-label="Ell – Garten Gramm pro Kind"></label>
-      <label>Gramm pro Erwachsenem<input type="number" min="0" step="1" inputmode="numeric" value="120" data-portion="adult" aria-label="Ell – Garten Gramm pro Erwachsenem"></label>
-    </div>
-    <div class="result"><span>Gekochter Reis für diese Gruppe</span><strong data-result>0 g</strong></div>
-  </section>
-
-  <section class="total" aria-live="polite">
-    <h2>Gesamtmenge für den gemeinsamen Topf</h2>
-    <div class="totals">
-      <div class="metric"><div class="label">Gekochter Reis insgesamt</div><div class="value" id="cooked">0 g</div></div>
-      <div class="metric"><div class="label">Rohen Reis abwiegen</div><div class="value" id="raw">0 g</div></div>
-    </div>
-    <p class="note">Umrechnung: 40 g roher Reis ergeben 100 g gekochten Reis. Der rohe Reis wird auf das nächste ganze Gramm aufgerundet. Die Gruppenwerte sind die gekochten Portionen, die du anschließend verteilst.</p>
-  </section>
-
-  <div class="actions">
-    <button class="primary" id="copy">Mengen kopieren</button>
-    <button class="secondary" id="reset">Personenzahlen zurücksetzen</button>
-  </div>
-  <div id="status" role="status"></div>
-  <footer>Die Eingaben werden nur auf diesem Gerät verarbeitet und nicht an einen Server gesendet.</footer>
-</main>
+<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#245c46"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="rice-192.png"><title>Crèche Küchenhelfer 2.2</title>
+<style>
+:root{color-scheme:light;--green:#245c46;--pale:#edf5ef;--line:#d7e1da;--ink:#17231d;--muted:#526158;--white:#fff}*{box-sizing:border-box}body{margin:0;background:#f5f7f5;color:var(--ink);font:15px/1.4 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}header{background:var(--green);color:white;padding:12px 14px;position:sticky;top:0;z-index:3}header h1{margin:0;font-size:1.15rem}header p{margin:2px 0 0;font-size:.78rem;opacity:.9}main{max-width:780px;margin:auto;padding:10px 10px 28px}.nav{display:flex;gap:6px;overflow:auto;margin:0 0 10px}.nav button{white-space:nowrap;flex:1}.tab{display:none}.tab.active{display:block}.card{background:white;border:1px solid var(--line);border-radius:12px;padding:12px;margin:0 0 10px;box-shadow:0 1px 3px #17231d08}.card h2{font-size:1rem;margin:0 0 9px}.muted,.hint{color:var(--muted);font-size:.8rem}.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.group{border-top:1px solid #e7ede8;padding:10px 0}.group:first-of-type{border-top:0}.group h3{margin:0 0 7px;font-size:.94rem}.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.fields.three{grid-template-columns:repeat(3,minmax(0,1fr))}label{display:block;color:var(--muted);font-size:.75rem}input,textarea,select{width:100%;margin-top:3px;padding:8px;border:1px solid #b9c9be;border-radius:7px;background:white;color:var(--ink);font:inherit;font-size:.92rem;min-width:0}textarea{min-height:70px;resize:vertical}.portion{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}.summary{background:var(--pale);border:1px solid #c8dfcf;border-radius:10px;padding:11px;margin:8px 0}.big{font-size:1.25rem;font-weight:800}.metrics{display:grid;grid-template-columns:1fr 1fr;gap:8px}.metric{background:white;border-radius:8px;padding:9px}.metric b{display:block;font-size:1.1rem}.actions{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:8px}button{border:0;border-radius:8px;padding:9px 10px;font:inherit;font-weight:650;cursor:pointer;background:#e5ebe6;color:var(--ink)}button.primary{background:var(--green);color:white}button.danger{background:#f9e5e3;color:#782a24}.nav button.active{background:var(--green);color:white}.checkrow{display:flex;align-items:center;gap:8px;margin:6px 0}.checkrow input{width:auto;margin:0}.status{font-size:.8rem;color:var(--green);min-height:1.1em;margin-top:6px}.record{padding:10px 0;border-top:1px solid var(--line)}.record:first-child{border-top:0}.record button{margin-top:5px}.empty{padding:15px;text-align:center;color:var(--muted)}footer{text-align:center;color:var(--muted);font-size:.72rem;padding:10px}
+@media(min-width:600px){main{padding:18px}.card{padding:16px}.nav{position:sticky;top:62px;background:#f5f7f5;padding:5px 0}}
+</style></head><body><header><h1>🍚 Crèche Küchenhelfer 2.2</h1><p>Tagesprotokoll · Reisplanung · Food-Waste-Statistik</p></header><main>
+<div class="nav"><button class="active" data-tab="today">Heute erfassen</button><button data-tab="history">Vergangene Tage</button><button data-tab="stats">Statistik</button><button data-tab="backup">Sicherung</button></div>
+<section id="today" class="tab active">
+<div class="card"><h2>Kochtag auswählen</h2><label>Datum<input type="date" id="date"></label><p class="hint">Du kannst auch ein vergangenes Datum auswählen. Die Daten werden lokal auf diesem Gerät gespeichert.</p></div>
+<div class="card"><h2>Personenzahlen</h2><p class="hint">Morgens reicht die Planung. Tatsächliche Zahlen kannst du später ergänzen. Leer bedeutet „noch nicht erfasst“.</p><div id="groups"></div><div class="summary"><div class="metrics"><div class="metric"><span class="muted">Geplant gesamt</span><b id="plannedTotal">0 Personen</b></div><div class="metric"><span class="muted">Tatsächlich gesamt</span><b id="actualTotal">—</b></div></div></div></div>
+<div class="card"><h2>Reisproduktion (optional)</h2><label class="checkrow"><input type="checkbox" id="riceDay"> Heute wurde Reis gekocht</label><div id="riceFields" hidden><div class="summary"><span class="muted">Empfohlene Menge nach Planung</span><div class="big" id="cookedRec">0 g gekocht</div><div id="rawRec" class="muted">0 g roher Reis</div></div><div class="fields"><label>Tatsächlich gekocht gesamt (g, gekocht)<input type="number" min="0" step="1" id="made" inputmode="numeric" placeholder="Optional"></label></div><p class="hint">Die Verteilung unten ist die empfohlene gekochte Menge pro Gruppe. Trage nach dem Essen optional die Reste jeder Gruppe ein.</p><div id="riceGroups"></div><p class="hint" id="consumption"></p></div></div>
+<div class="card"><h2>Bemerkungen</h2><label>Notiz zum Tag<textarea id="notes" placeholder="z. B. Gemüse vergessen, viele Nachschläge, zusätzliche Erwachsene …"></textarea></label><div class="actions"><button class="primary" id="save">Tag speichern</button><button id="clearForm">Formular leeren</button></div><div id="status" class="status" role="status"></div></div>
+</section>
+<section id="history" class="tab"><div class="card"><h2>Gespeicherte Tage</h2><p class="hint">Wähle einen Eintrag, um ihn zu bearbeiten. Ein Tag kann auch nur Personenzahlen enthalten.</p><div id="records"></div></div></section>
+<section id="stats" class="tab"><div class="card"><h2>Deine bisherigen Daten</h2><div class="metrics"><div class="metric"><span class="muted">Protokollierte Tage</span><b id="sDays">0</b></div><div class="metric"><span class="muted">Ø geplante Personen</span><b id="sAvg">—</b></div><div class="metric"><span class="muted">Reistage mit Messung</span><b id="sRice">0</b></div><div class="metric"><span class="muted">Gemessene Reste gesamt</span><b id="sLeft">—</b></div></div><p class="hint" id="sHint">Die Statistik wird mit deinen gespeicherten Daten gefüllt. Je mehr tatsächliche Personenzahlen und Messungen du erfasst, desto aussagekräftiger wird sie.</p></div><div class="card"><h2>Letzte Reistage</h2><div id="riceHistory"></div></div></section>
+<section id="backup" class="tab"><div class="card"><h2>Daten sichern</h2><p>Exportiere regelmäßig eine Sicherungsdatei. Sie enthält deine Tagesprotokolle und Portionswerte.</p><button class="primary" id="exportJson">Sicherung herunterladen (JSON)</button><div class="actions"><button id="exportCsv">Tabelle herunterladen (CSV)</button><button id="importBtn">Sicherung wiederherstellen</button></div><input id="importFile" type="file" accept=".json,application/json" hidden><p class="hint">Beim Wiederherstellen werden vorhandene Daten mit den Daten der Sicherung zusammengeführt; gleich datierte Einträge aus der Sicherung ersetzen den jeweiligen Eintrag auf diesem Gerät.</p><div id="backupStatus" class="status" role="status"></div></div><div class="card"><h2>Portionswerte für gekochten Reis</h2><p class="hint">Diese Werte werden für die Empfehlung verwendet. Du kannst sie jederzeit anpassen.</p><div id="portionSettings"></div><button class="primary" id="savePortions">Portionswerte speichern</button></div></section>
+<footer>Deine Daten bleiben auf diesem Gerät, bis du sie exportierst oder löschst. Sie werden nicht automatisch an einen Server gesendet.</footer></main>
 <script>
-(() => {
-  const groups = [...document.querySelectorAll('.group')];
-  const fmt = n => `${Math.round(n).toLocaleString('de-DE')} g`;
-  function calculate() {
-    let total = 0;
-    groups.forEach(g => {
-      const childCount = Math.max(0, Math.floor(Number(g.querySelector('[data-field="children"]').value) || 0));
-      const adultCount = Math.max(0, Math.floor(Number(g.querySelector('[data-field="adults"]').value) || 0));
-      const childPortion = Math.max(0, Math.floor(Number(g.querySelector('[data-portion="child"]').value) || 0));
-      const adultPortion = Math.max(0, Math.floor(Number(g.querySelector('[data-portion="adult"]').value) || 0));
-      const cooked = childCount * childPortion + adultCount * adultPortion;
-      total += cooked;
-      g.querySelector('[data-result]').textContent = fmt(cooked);
-    });
-    document.getElementById('cooked').textContent = fmt(total);
-    document.getElementById('raw').textContent = fmt(Math.ceil(total * 0.4));
-    return total;
-  }
-  document.querySelectorAll('input').forEach(i => i.addEventListener('input', calculate));
-  document.getElementById('reset').addEventListener('click', () => {
-    document.querySelectorAll('[data-field]').forEach(i => i.value = 0);
-    document.getElementById('status').textContent = '';
-    calculate();
-  });
-  document.getElementById('copy').addEventListener('click', async () => {
-    calculate();
-    const lines = ['Reis-Rechner – heutige Mengen'];
-    groups.forEach(g => lines.push(`${g.querySelector('h2').textContent}: ${g.querySelector('[data-result]').textContent} (${g.querySelector('[data-portion="child"]').value} g/Kind, ${g.querySelector('[data-portion="adult"]').value} g/Erwachsener)`));
-    lines.push(`Gekochter Reis insgesamt: ${document.getElementById('cooked').textContent}`);
-    lines.push(`Rohen Reis abwiegen: ${document.getElementById('raw').textContent}`);
-    const status = document.getElementById('status');
-    try {
-      await navigator.clipboard.writeText(lines.join('\n'));
-      status.textContent = 'Mengen wurden kopiert.';
-    } catch {
-      const ta = document.createElement('textarea');
-      ta.value = lines.join('\n'); document.body.appendChild(ta); ta.select();
-      const ok = document.execCommand('copy'); ta.remove();
-      status.textContent = ok ? 'Mengen wurden kopiert.' : 'Kopieren nicht möglich – bitte Werte manuell übernehmen.';
-    }
-  });
-  calculate();
-  if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
-    window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(() => {}));
-  }
+(()=>{'use strict';
+const KEY='creche-kuechenhelfer-v21';
+const defs=[['rb','Reichlange – Baby',30,120],['rm','Reichlange – Mitte',50,120],['rg','Reichlange – Garten',55,155],['lb','Ell – Baby',30,120],['lg','Ell – Garten',45,120]];
+const $=id=>document.getElementById(id);const today=()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`};
+let db=loadDb(), currentDate=today();function loadDb(){try{const x=JSON.parse(localStorage.getItem(KEY)||'{}');return {records:x.records&&typeof x.records==='object'?x.records:{},portions:x.portions||{}}}catch{return {records:{},portions:{}}}}
+function persist(){localStorage.setItem(KEY,JSON.stringify(db))}function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}function num(v){if(v===''||v===null||v===undefined)return null;const n=Number(v);return Number.isFinite(n)&&n>=0?Math.floor(n):null}function fmt(n){return `${Math.round(n).toLocaleString('de-DE')} g`}function portion(key,kind){const p=db.portions[key]||{};const d=defs.find(g=>g[0]===key);return num(p[kind])??(kind==='child'?d[2]:d[3])}
+function blankRecord(date){return {date,groups:Object.fromEntries(defs.map(g=>[g[0],{plannedChildren:'',plannedAdults:'',actualChildren:'',actualAdults:'',note:'',leftover:''}])),riceDay:false,made:'',notes:''}}
+function getRecord(date){return db.records[date]||blankRecord(date)}function ensureRecord(date){if(!db.records[date])db.records[date]=blankRecord(date);return db.records[date]}
+function buildGroups(){ $('riceGroups').innerHTML=defs.map(g=>`<div class="group" data-rice-key="${g[0]}"><h3>${g[1]}</h3><div class="metrics"><div class="metric"><span class="muted">Empfohlen, gekocht</span><b id="alloc-${g[0]}">0 g</b></div><label>Rest dieser Gruppe (g)<input type="number" min="0" step="1" inputmode="numeric" data-leftover="${g[0]}" placeholder="Optional"></label></div><p class="hint" id="eaten-${g[0]}"></p></div>`).join('');$('groups').innerHTML=defs.map(g=>`<div class="group" data-key="${g[0]}"><h3>${g[1]}</h3><div class="fields"><label>Geplante Kinder<input type="number" min="0" step="1" inputmode="numeric" data-field="plannedChildren" placeholder="—"></label><label>Geplante Erwachsene<input type="number" min="0" step="1" inputmode="numeric" data-field="plannedAdults" placeholder="—"></label><label>Tatsächliche Kinder<input type="number" min="0" step="1" inputmode="numeric" data-field="actualChildren" placeholder="optional"></label><label>Tatsächliche Erwachsene<input type="number" min="0" step="1" inputmode="numeric" data-field="actualAdults" placeholder="optional"></label></div><label style="margin-top:7px">Bemerkung zu dieser Gruppe<input type="text" data-field="note" placeholder="Optional"></label></div>`).join('');$('portionSettings').innerHTML=defs.map(g=>`<div class="group" data-key="${g[0]}"><h3>${g[1]}</h3><div class="portion"><label>g pro Kind<input type="number" min="0" step="1" data-portion="child" value="${portion(g[0],'child')}"></label><label>g pro Erwachsenem<input type="number" min="0" step="1" data-portion="adult" value="${portion(g[0],'adult')}"></label></div></div>`).join('')}
+function fillForm(date){currentDate=date;$('date').value=date;const r=getRecord(date);document.querySelectorAll('#groups .group').forEach(el=>{const gr=r.groups?.[el.dataset.key]||{};el.querySelectorAll('[data-field]').forEach(i=>i.value=gr[i.dataset.field]??'')});$('riceDay').checked=!!r.riceDay;$('riceFields').hidden=!r.riceDay;$('made').value=r.made??'';document.querySelectorAll('[data-leftover]').forEach(i=>i.value=r.groups?.[i.dataset.leftover]?.leftover??'');$('notes').value=r.notes??'';$('status').textContent='';calculate()}
+function readForm(){const r=blankRecord(currentDate);document.querySelectorAll('#groups .group').forEach(el=>{const gr={};el.querySelectorAll('[data-field]').forEach(i=>gr[i.dataset.field]=i.value);r.groups[el.dataset.key]=gr});r.riceDay=$('riceDay').checked;r.made=$('made').value;document.querySelectorAll('[data-leftover]').forEach(i=>{if(r.groups[i.dataset.leftover])r.groups[i.dataset.leftover].leftover=i.value});r.notes=$('notes').value;return r}
+function calculate(){let pc=0,pa=0,ac=0,aa=0,hasA=false,cooked=0,totalLeft=0,allLeftEntered=true;const allocations={};document.querySelectorAll('#groups .group').forEach(el=>{const k=el.dataset.key;const c=num(el.querySelector('[data-field="plannedChildren"]').value)||0,a=num(el.querySelector('[data-field="plannedAdults"]').value)||0;pc+=c;pa+=a;const allocation=c*portion(k,'child')+a*portion(k,'adult');allocations[k]=allocation;cooked+=allocation;const cv=el.querySelector('[data-field="actualChildren"]').value,av=el.querySelector('[data-field="actualAdults"]').value;if(cv!==''||av!==''){hasA=true;ac+=num(cv)||0;aa+=num(av)||0}});$('plannedTotal').textContent=`${pc+pa} Personen`;$('actualTotal').textContent=hasA?`${ac+aa} Personen`:'—';$('cookedRec').textContent=fmt(cooked)+' gekocht';$('rawRec').textContent=fmt(Math.ceil(cooked*.4))+' roher Reis';document.querySelectorAll('[data-rice-key]').forEach(el=>{const k=el.dataset.riceKey,allocation=allocations[k]||0,lv=el.querySelector('[data-leftover]').value,left=num(lv);$('alloc-'+k).textContent=fmt(allocation);if(lv===''){allLeftEntered=false;$('eaten-'+k).textContent='';}else if(left!==null){totalLeft+=left;$('eaten-'+k).textContent=left<=allocation?`Geschätzt gegessen: ${fmt(allocation-left)}`:`Rest liegt ${fmt(left-allocation)} über der empfohlenen Zuteilung – bitte Menge prüfen.`}});const made=num($('made').value);$('consumption').textContent=allLeftEntered?`Reste aller Gruppen zusammen: ${fmt(totalLeft)}${made!==null&&totalLeft<=made?` · Gegessen gesamt nach tatsächlich gekochter Menge: ${fmt(made-totalLeft)}`:''}`:'Trage Reste pro Gruppe ein, um sie zusammenzurechnen.';return cooked}
+function save(){const r=readForm();if(!r.riceDay){r.made='';defs.forEach(g=>r.groups[g[0]].leftover='')}db.records[currentDate]=r;persist();$('status').textContent=`Gespeichert: ${currentDate}`;renderHistory();renderStats()}
+function renderHistory(){const entries=Object.values(db.records).sort((a,b)=>b.date.localeCompare(a.date));$('records').innerHTML=entries.length?entries.map(r=>{const counts=defs.map(g=>{const x=r.groups?.[g[0]]||{};const n=(num(x.plannedChildren)||0)+(num(x.plannedAdults)||0);return n}).reduce((a,b)=>a+b,0);return `<div class="record"><strong>${esc(r.date)}</strong> · geplant ${counts} Personen${r.riceDay?' · Reistag':''}${r.notes?`<p class="muted">${esc(r.notes)}</p>`:''}<button data-open="${esc(r.date)}">Tag öffnen / bearbeiten</button></div>`}).join(''):'<div class="empty">Noch keine Tage gespeichert.</div>';document.querySelectorAll('[data-open]').forEach(b=>b.addEventListener('click',()=>{fillForm(b.dataset.open);showTab('today')}))}
+function renderStats(){const rs=Object.values(db.records), planned=rs.map(r=>defs.reduce((s,g)=>s+(num(r.groups?.[g[0]]?.plannedChildren)||0)+(num(r.groups?.[g[0]]?.plannedAdults)||0),0));$('sDays').textContent=rs.length;$('sAvg').textContent=planned.length?(planned.reduce((a,b)=>a+b,0)/planned.length).toLocaleString('de-DE',{maximumFractionDigits:1}):'—';const measured=rs.filter(r=>r.riceDay&&num(r.made)!==null&&defs.every(g=>num(r.groups?.[g[0]]?.leftover)!==null));$('sRice').textContent=measured.length;const left=measured.reduce((s,r)=>s+defs.reduce((z,g)=>z+(num(r.groups?.[g[0]]?.leftover)||0),0),0);$('sLeft').textContent=measured.length?fmt(left):'—';$('riceHistory').innerHTML=rs.filter(r=>r.riceDay).sort((a,b)=>b.date.localeCompare(a.date)).slice(0,12).map(r=>{const rests=defs.map(g=>num(r.groups?.[g[0]]?.leftover)).filter(v=>v!==null);return `<div class="record"><strong>${esc(r.date)}</strong><p class="muted">${num(r.made)!==null?`Gekocht ${fmt(num(r.made))}`:'Gekochte Menge niet ingevuld'} · Reste erfasst: ${rests.length}/5${rests.length?` · bekannte Reste ${fmt(rests.reduce((a,b)=>a+b,0))}`:''}</p>${r.notes?`<p>${esc(r.notes)}</p>`:''}</div>`}).join('')||'<div class="empty">Noch keine Reistage protokolliert.</div>'}
+function showTab(id){document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.id===id));document.querySelectorAll('[data-tab]').forEach(b=>b.classList.toggle('active',b.dataset.tab===id));if(id==='history')renderHistory();if(id==='stats')renderStats()}
+document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>showTab(b.dataset.tab)));$('date').value=today();$('date').addEventListener('change',()=>{if($('date').value){currentDate=$('date').value;fillForm(currentDate)}});$('groups').addEventListener('input',calculate);$('riceDay').addEventListener('change',()=>{$('riceFields').hidden=!$('riceDay').checked;calculate()});$('made').addEventListener('input',calculate);$('riceGroups').addEventListener('input',calculate);$('save').addEventListener('click',save);$('clearForm').addEventListener('click',()=>{if(confirm('Formular für dieses Datum leeren? Noch nicht gespeicherte Eingaben gehen verloren.'))fillForm(currentDate)});
+$('savePortions').addEventListener('click',()=>{document.querySelectorAll('#portionSettings .group').forEach(el=>{db.portions[el.dataset.key]={child:el.querySelector('[data-portion="child"]').value,adult:el.querySelector('[data-portion="adult"]').value}});persist();fillForm(currentDate);$('backupStatus').textContent='Portionswerte gespeichert.'});
+$('exportJson').addEventListener('click',()=>download('creche-kuechenhelfer-sicherung-'+today()+'.json',JSON.stringify({format:'creche-kuechenhelfer-v22',exportedAt:new Date().toISOString(),...db},null,2),'application/json'));$('exportCsv').addEventListener('click',()=>{const rows=[['Datum','Gruppe','Geplante Kinder','Geplante Erwachsene','Tatsächliche Kinder','Tatsächliche Erwachsene','Reistag','Gekocht gesamt g','Rest dieser Gruppe g','Gruppenbemerkung','Tagesbemerkung']];Object.values(db.records).sort((a,b)=>a.date.localeCompare(b.date)).forEach(r=>defs.forEach(g=>{const x=r.groups?.[g[0]]||{};rows.push([r.date,g[1],x.plannedChildren,x.plannedAdults,x.actualChildren,x.actualAdults,r.riceDay?'Ja':'Nein',r.made,x.leftover,x.note,r.notes])}));const csv='\ufeff'+rows.map(row=>row.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(';')).join('\r\n');download('creche-kuechenhelfer-'+today()+'.csv',csv,'text/csv;charset=utf-8')});function download(name,content,type){const a=document.createElement('a'),url=URL.createObjectURL(new Blob([content],{type}));a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
+$('importBtn').addEventListener('click',()=>$('importFile').click());$('importFile').addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;try{const x=JSON.parse(await f.text());if(!x.records||typeof x.records!=='object')throw new Error('Die Datei enthält keine erkennbaren Tagesdaten.');db.records={...db.records,...x.records};if(x.portions)db.portions={...db.portions,...x.portions};persist();buildGroups();fillForm(currentDate);renderHistory();renderStats();$('backupStatus').textContent='Sicherung importiert.'}catch(err){$('backupStatus').textContent='Import fehlgeschlagen: '+err.message}e.target.value=''});
+buildGroups();fillForm(currentDate);renderHistory();renderStats();if('serviceWorker'in navigator&&location.protocol.startsWith('http'))addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 })();
-</script>
-</body>
-</html>
+</script></body></html>
